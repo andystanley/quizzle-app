@@ -16,8 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".QuizActivity" />
-        <activity android:name=".QuizCreatorActivity"></activity>
+        <activity android:name=".QuizActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".QuizCreatorActivity" />
+        <activity android:name=".high_score_activity"></activity>
     </application>
 
 </manifest>

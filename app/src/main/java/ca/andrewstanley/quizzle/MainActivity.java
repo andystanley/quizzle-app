@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +27,7 @@ public class MainActivity extends Activity {
         btnStartQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 displayCategories();
             }
         });
@@ -73,6 +75,8 @@ public class MainActivity extends Activity {
         public void onClick(DialogInterface dialog, int which) {
             //Toast.makeText(MainActivity.this, "You selected " + itemList[which], Toast.LENGTH_LONG).show();
             displayQuizzes();
+            //Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
+           // startActivity(intent);
         }
     };
 
@@ -80,6 +84,8 @@ public class MainActivity extends Activity {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             Toast.makeText(MainActivity.this, "You selected " + quizzes[which], Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(MainActivity.this, QuizActivity.class);
+            startActivity(intent);
         }
     };
 }
