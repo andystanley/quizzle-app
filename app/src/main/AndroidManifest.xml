@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".QuizCreatorActivity" />
-        <activity android:name=".high_score_activity"></activity>
+        <activity android:name=".HighScoreActivity"></activity>
     </application>
 
 </manifest>

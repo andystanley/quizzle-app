@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
         dialog.show();
     }
 
-    private void displayQuizzes() {
+    private void displayQuizzes(String [] quizzes) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle("Choose a Quiz")
@@ -68,15 +68,24 @@ public class MainActivity extends Activity {
 
     private String[] categories = {"Computer Science", "Geography", "Biology"};
 
-    private String[] quizzes = {"Quiz 1", "Quiz 2"};
+    private String[] quizzes = new String []{null};
 
     DialogInterface.OnClickListener categoryListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             //Toast.makeText(MainActivity.this, "You selected " + itemList[which], Toast.LENGTH_LONG).show();
-            displayQuizzes();
-            //Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
-           // startActivity(intent);
+
+            if (which == 0) { // Computer Science
+                quizzes = new String[]{"Android", "C#", "C++"};
+            }
+            else if (which == 1) { // Geography
+                quizzes = new String[]{"Canada"};
+            }
+            else if (which == 2) { // Biology
+                quizzes = new String[]{"Osmosis"};
+            }
+
+            displayQuizzes(quizzes);
         }
     };
 
@@ -84,8 +93,12 @@ public class MainActivity extends Activity {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             Toast.makeText(MainActivity.this, "You selected " + quizzes[which], Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(MainActivity.this, QuizActivity.class);
-            startActivity(intent);
+
+            // Open the QuizActivity
+            Intent quizActivity = new Intent(getApplicationContext(), QuizActivity.class);
+            // Pass the selected quiz to the QuizActivity
+            quizActivity.putExtra("quizId", quizzes[which]);
+            startActivity(quizActivity);
         }
     };
 }
