@@ -3,17 +3,22 @@ package ca.andrewstanley.quizzle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
     Button btnStartQuiz;
     Button btnCreateQuiz;
+    TextView txtScores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +28,14 @@ public class MainActivity extends Activity {
         // Set up views
         btnStartQuiz = findViewById(R.id.btn_start_quiz);
         btnCreateQuiz = findViewById(R.id.btn_create_quiz);
+        txtScores = findViewById(R.id.txt_scores);
+
+        // Display the recent quizzes
+        displayRecentQuizzes();
 
         btnStartQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 displayCategories();
             }
         });
@@ -35,7 +43,9 @@ public class MainActivity extends Activity {
         btnCreateQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent quizCreatorActivity = new Intent(getApplicationContext(), QuizCreatorActivity.class);
+                // Pass the selected quiz to the QuizActivity
+                startActivity(quizCreatorActivity);
             }
         });
     }
@@ -101,4 +111,17 @@ public class MainActivity extends Activity {
             startActivity(quizActivity);
         }
     };
+
+    public void displayRecentQuizzes() {
+        SharedPreferences scores = PreferenceManager.getDefaultSharedPreferences(this);
+
+        StringBuilder scoresBuilder = new StringBuilder("");
+
+        scoresBuilder.append("Quiz: ");
+        scoresBuilder.append(scores.getString("quiz", ""));
+        scoresBuilder.append(" Score: ");
+        scoresBuilder.append(scores.getInt("score", 0));
+
+        txtScores.setText(scoresBuilder);
+    }
 }

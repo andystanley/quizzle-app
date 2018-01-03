@@ -19,6 +19,7 @@ public class QuizActivity extends Activity {
     private Button buttonChoice2;
     private Button buttonChoice3;
     private Button buttonChoice4;
+    private Button btnNext;
 
     String quizId;
     private String answer;
@@ -37,6 +38,7 @@ public class QuizActivity extends Activity {
         buttonChoice2 = findViewById(R.id.choice2);
         buttonChoice3 = findViewById(R.id.choice3);
         buttonChoice4 = findViewById(R.id.choice4);
+        btnNext = findViewById(R.id.btnNext);
 
         Intent mainActivity = getIntent();
 
@@ -45,11 +47,28 @@ public class QuizActivity extends Activity {
         }
 
         questionBank.initQuestions(getApplicationContext(), quizId);
-        updateQuestion();
+        nextQuestion();
         updateScore(score);
+
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                nextQuestion();
+                // Reset the button colors
+                buttonChoice1.setEnabled(true);
+                buttonChoice2.setEnabled(true);
+                buttonChoice3.setEnabled(true);
+                buttonChoice4.setEnabled(true);
+                buttonChoice1.setBackgroundResource(android.R.drawable.btn_default);
+                buttonChoice2.setBackgroundResource(android.R.drawable.btn_default);
+                buttonChoice3.setBackgroundResource(android.R.drawable.btn_default);
+                buttonChoice4.setBackgroundResource(android.R.drawable.btn_default);
+            }
+        });
     }
 
-    private void updateQuestion() {
+    private void nextQuestion() {
         //check to make sure its in array length
         if (questionNumber < questionBank.getLength()){
             //set text for new question
@@ -95,16 +114,17 @@ public class QuizActivity extends Activity {
         if(selected.getText().equals(answer)){
             selected.setBackgroundColor(colorCorrect);
             score = score + 1;
-            Toast.makeText(QuizActivity.this,"Correct!", Toast.LENGTH_SHORT).show();
         }
         else {
             selected.setBackgroundColor(colorIncorrect);
-            Toast.makeText(QuizActivity.this, "Wrong!", Toast.LENGTH_SHORT).show();
         }
+
+        buttonChoice1.setEnabled(false);
+        buttonChoice2.setEnabled(false);
+        buttonChoice3.setEnabled(false);
+        buttonChoice4.setEnabled(false);
 
         //show total score for user
         updateScore(score);
-        //move onto next question once answered
-        updateQuestion();
     }
 }

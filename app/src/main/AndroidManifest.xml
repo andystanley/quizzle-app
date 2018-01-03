@@ -21,8 +21,8 @@
                 <action android:name="android.intent.action.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".QuizCreatorActivity" />
-        <activity android:name=".HighScoreActivity"></activity>
+        <activity android:name=".HighScoreActivity" />
+        <activity android:name=".QuizCreatorActivity"></activity>
     </application>
 
 </manifest>
