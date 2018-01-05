@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class QuizDb {
 
@@ -152,6 +153,38 @@ public class QuizDb {
 
         return questions;
     }
+
+    public String [] getCreatedQuizzes() {
+        List<String> createdQuizzes = new ArrayList<String>();
+
+        // Get readable database
+        database = openHelper.getReadableDatabase();
+
+        // Where the quizId does not equal the premade quizzes
+        String select = "quizid NOT IN(?,?,?,?,?)";
+
+        String[] selectArgs = new String[] {"Android", "C#", "C++", "Canada", "Osmosis"};
+
+        Cursor result = database.query(QUESTIONS_TABLE, null, select, selectArgs, null, null, null);
+
+        int i = 0;
+        while (result.moveToNext()) {
+            String quizid = result.getString(QUIZID_COLUMN);
+
+            // Add it to the array
+            createdQuizzes.add(quizid);
+            i++;
+        }
+
+        result.close();
+        database.close();
+
+        String[] cq = createdQuizzes.toArray(new String[0]);
+
+        // Return the array
+        return cq;
+    }
+
 
     public boolean addQuiz(String question, String choice1, String choice2, String choice3, String choice4, String answer, String quizId){
         SQLiteDatabase db = openHelper.getWritableDatabase();

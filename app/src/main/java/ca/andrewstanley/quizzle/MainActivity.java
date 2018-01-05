@@ -14,6 +14,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends Activity {
 
     Button btnStartQuiz;
@@ -76,7 +79,7 @@ public class MainActivity extends Activity {
         dialog.show();
     }
 
-    private String[] categories = {"Computer Science", "Geography", "Biology"};
+    private String[] categories = {"Computer Science", "Geography", "Biology", "Custom Quizzes"};
 
     private String[] quizzes = new String []{null};
 
@@ -94,7 +97,10 @@ public class MainActivity extends Activity {
             else if (which == 2) { // Biology
                 quizzes = new String[]{"Osmosis"};
             }
-
+            else if (which == 3) { // Created Quizzes
+                QuizDb database = new QuizDb(getApplicationContext());
+                quizzes = database.getCreatedQuizzes(); //get questions/choices/answers from db
+            }
             displayQuizzes(quizzes);
         }
     };
