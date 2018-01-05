@@ -152,5 +152,24 @@ public class QuizDb {
 
         return questions;
     }
+
+    public boolean addQuiz(String question, String choice1, String choice2, String choice3, String choice4, String answer, String quizId){
+        SQLiteDatabase db = openHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(QUESTION, question);
+        contentValues.put(CHOICE1, choice1);
+        contentValues.put(CHOICE2, choice2);
+        contentValues.put(CHOICE3, choice3);
+        contentValues.put(CHOICE4, choice4);
+        contentValues.put(ANSWER, answer);
+        contentValues.put(QUIZ_ID, quizId);
+
+        long result = db.insert(QUESTIONS_TABLE, null, contentValues);
+            if(result == -1){
+                return false;
+            }
+            else
+                return true;
+    }
 }
 
