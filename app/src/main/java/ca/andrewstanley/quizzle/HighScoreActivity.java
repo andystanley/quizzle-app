@@ -12,7 +12,6 @@ import android.view.View;
 
 public class HighScoreActivity extends Activity {
 
-    String quizId;
     TextView txtScore;
     TextView txtHighScore;
     Button btnMenu;
@@ -32,13 +31,13 @@ public class HighScoreActivity extends Activity {
 
         Intent intent = getIntent();
         int score = intent.getIntExtra("score",0);
-        quizId = intent.getStringExtra("quizId");
+        final String quizId = intent.getStringExtra("quizId");
 
         // Set the textview to the score
         txtScore.setText("Your Score: " + score);
 
         // Get the high score from shared preferences
-        getHighScore(score);
+        getHighScore(score, quizId);
 
         // Save the users score to shared preferences
         saveScore(score, quizId);
@@ -73,12 +72,12 @@ public class HighScoreActivity extends Activity {
         scoresEditor.commit();
     }
 
-    public void getHighScore(int score) {
+    public void getHighScore(int score, String quizId) {
         SharedPreferences highScore = getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor highScoreEditor = highScore.edit();
 
         // Retrieve the highscore
-        int hs = highScore.getInt("highscore",0);
+        int hs = highScore.getInt(quizId + "highscore",0);
 
         if(hs >= score) {
             // Set the high score textview to the existing highscore
@@ -89,7 +88,7 @@ public class HighScoreActivity extends Activity {
             txtHighScore.setText("New highscore: "+ score);
 
             // Save the highscore to shared preferences
-            highScoreEditor.putInt("highscore", score);
+            highScoreEditor.putInt(quizId + "highscore", score);
 
             // Save the changes
             highScoreEditor.commit();

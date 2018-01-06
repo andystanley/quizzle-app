@@ -167,13 +167,13 @@ public class QuizDb {
 
         Cursor result = database.query(QUESTIONS_TABLE, null, select, selectArgs, null, null, null);
 
-        int i = 0;
         while (result.moveToNext()) {
             String quizid = result.getString(QUIZID_COLUMN);
 
-            // Add it to the array
-            createdQuizzes.add(quizid);
-            i++;
+            if (!createdQuizzes.contains(quizid)) {
+                // Add it to the array
+                createdQuizzes.add(quizid);
+            }
         }
 
         result.close();
