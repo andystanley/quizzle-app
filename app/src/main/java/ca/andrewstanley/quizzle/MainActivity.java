@@ -44,9 +44,9 @@ public class MainActivity extends Activity {
         btnAddQuestions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent quizCreatorActivity = new Intent(getApplicationContext(), QuizCreatorActivity.class);
+                Intent addQuestionsActivity = new Intent(getApplicationContext(), AddQuestionsActivity.class);
                 // Pass the selected quiz to the QuizActivity
-                startActivity(quizCreatorActivity);
+                startActivity(addQuestionsActivity);
             }
         });
     }

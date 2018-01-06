@@ -10,7 +10,7 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class QuizCreatorActivity extends Activity {
+public class AddQuestionsActivity extends Activity {
     QuizDb dbId;
     EditText quizQuestion, answerOne, answerTwo, answerThree,answerFour, correctAnswer, addSubject;
     Button btnSaveQuestion,doneButton;
@@ -18,19 +18,19 @@ public class QuizCreatorActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quiz_creator);
+        setContentView(R.layout.activity_add_questions);
 
         //initialize all field variables
         dbId = new QuizDb(this);
-        quizQuestion = (EditText) findViewById(R.id.quiz_question);
-        answerOne = (EditText) findViewById(R.id.answer_one);
-        answerTwo = (EditText) findViewById(R.id.answer_two);
-        answerThree = (EditText) findViewById(R.id.answer_three);
-        answerFour = (EditText) findViewById(R.id.answer_four);
-        correctAnswer = (EditText) findViewById(R.id.correct_answer);
-        addSubject = (EditText) findViewById(R.id.add_subject);
-        btnSaveQuestion = (Button) findViewById(R.id.save_question);
-        doneButton = (Button) findViewById(R.id.done_button);
+        quizQuestion = findViewById(R.id.quiz_question);
+        answerOne = findViewById(R.id.answer_one);
+        answerTwo = findViewById(R.id.answer_two);
+        answerThree = findViewById(R.id.answer_three);
+        answerFour = findViewById(R.id.answer_four);
+        correctAnswer = findViewById(R.id.correct_answer);
+        addSubject = findViewById(R.id.add_subject);
+        btnSaveQuestion = findViewById(R.id.save_question);
+        doneButton = findViewById(R.id.done_button);
         final Spinner addCat = findViewById(R.id.newCatSpinner);
         String[] categories = getResources().getStringArray(R.array.categories);
         existingCat = findViewById(R.id.existingCat);
@@ -90,8 +90,8 @@ public class QuizCreatorActivity extends Activity {
                 addSubject.getText().toString());
 
         if (quizAdded == true) {
-            Toast.makeText(QuizCreatorActivity.this, "Question is Saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Question is Saved", Toast.LENGTH_SHORT).show();
         } else
-            Toast.makeText(QuizCreatorActivity.this, "Question is Not Saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Question is Not Saved", Toast.LENGTH_SHORT).show();
     }
 }
