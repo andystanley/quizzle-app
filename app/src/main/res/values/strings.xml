@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Quizzle</string>
+    <string-array name="categories">
+        <item>Android</item>
+        <item>C++</item>
+        <item>C#</item>
+        <item>Canadian Geography</item>
+        <item>Osmosis</item>
+    </string-array>
 </resources>
