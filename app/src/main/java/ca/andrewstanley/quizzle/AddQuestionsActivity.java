@@ -32,7 +32,7 @@ public class AddQuestionsActivity extends Activity {
         btnSaveQuestion = findViewById(R.id.save_question);
         doneButton = findViewById(R.id.done_button);
         final Spinner addCat = findViewById(R.id.newCatSpinner);
-        String[] categories = getResources().getStringArray(R.array.categories);
+        String[] categories;
         existingCat = findViewById(R.id.existingCat);
         newCat = findViewById(R.id.newCat);
 
@@ -59,14 +59,21 @@ public class AddQuestionsActivity extends Activity {
         btnSaveQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveQuestion();
+                if (existingCat.isChecked()){
+                    saveQuestion(addCat.getSelectedItem().toString());
+                }
+                else {
+                    saveQuestion(addSubject.getText().toString());
+                }
+
             }
         });
 
+        QuizDb database = new QuizDb(getApplicationContext());
+        categories = database.getAllQuizzes();
         //create instance of array adapter
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this,
-
                 android.R.layout.simple_spinner_item,
                 //pass categories array
                 categories
@@ -79,7 +86,7 @@ public class AddQuestionsActivity extends Activity {
         addCat.setAdapter(adapter);
     }
 
-    public void saveQuestion() {
+    public void saveQuestion(String quiz) {
         boolean quizAdded = dbId.addQuiz(
                 quizQuestion.getText().toString(),
                 answerOne.getText().toString(),
@@ -87,7 +94,8 @@ public class AddQuestionsActivity extends Activity {
                 answerThree.getText().toString(),
                 answerFour.getText().toString(),
                 correctAnswer.getText().toString(),
-                addSubject.getText().toString());
+                quiz);
+                //addSubject.getText().toString());
 
         if (quizAdded == true) {
             Toast.makeText(this, "Question is Saved", Toast.LENGTH_SHORT).show();

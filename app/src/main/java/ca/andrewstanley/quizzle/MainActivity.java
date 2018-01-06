@@ -19,6 +19,8 @@ public class MainActivity extends Activity {
     Button btnAddQuestions;
     TextView txtScores;
 
+    private QuestionBank questionBank;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +30,10 @@ public class MainActivity extends Activity {
         btnStartQuiz = findViewById(R.id.btn_start_quiz);
         btnAddQuestions = findViewById(R.id.btn_add_questions);
         txtScores = findViewById(R.id.txt_scores);
+
+        // Initiliaze the deafult questions
+        questionBank = new QuestionBank();
+        questionBank.initDefaultQuestions(getApplicationContext());
 
         // Display the recent quizzes
         displayRecentQuizzes();

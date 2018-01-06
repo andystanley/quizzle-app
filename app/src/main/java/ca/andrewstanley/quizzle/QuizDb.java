@@ -185,6 +185,36 @@ public class QuizDb {
         return cq;
     }
 
+    public String [] getAllQuizzes() {
+        List<String> createdQuizzes = new ArrayList<String>();
+
+        // Get readable database
+        database = openHelper.getReadableDatabase();
+
+        // Where the quizId does not equal the premade quizzes
+        String select = "quizid NOT IN(?)";
+
+        String[] selectArgs = new String[] {""};
+
+        Cursor result = database.query(QUESTIONS_TABLE, null, select, selectArgs, null, null, null);
+
+        while (result.moveToNext()) {
+            String quizid = result.getString(QUIZID_COLUMN);
+
+            if (!createdQuizzes.contains(quizid)) {
+                // Add it to the array
+                createdQuizzes.add(quizid);
+            }
+        }
+
+        result.close();
+        database.close();
+
+        String[] cq = createdQuizzes.toArray(new String[0]);
+
+        // Return the array
+        return cq;
+    }
 
     public boolean addQuiz(String question, String choice1, String choice2, String choice3, String choice4, String answer, String quizId){
         SQLiteDatabase db = openHelper.getWritableDatabase();
