@@ -81,7 +81,7 @@ public class QuizDb {
         }
     }
 
-    public Questions saveQuestion(Questions question) {
+    public Question saveQuestion(Question question) {
 
         // Get a writeable version of the database
         database = openHelper.getWritableDatabase();
@@ -109,10 +109,10 @@ public class QuizDb {
         return question;
     }
 
-    public ArrayList<Questions> getQuestions(String quizId) {
+    public ArrayList<Question> getQuestions(String quizId) {
 
         // Create an ArrayList that will hold the questions
-        ArrayList<Questions> questions = new ArrayList<>();
+        ArrayList<Question> questions = new ArrayList<>();
 
         // Get readable database
         database = openHelper.getReadableDatabase();
@@ -145,7 +145,7 @@ public class QuizDb {
             choices[2] = choice3;
             choices[3] = choice4;
 
-            questions.add(new Questions(question, choices, answer, quizid));
+            questions.add(new Question(question, choices, answer, quizid));
         }
 
         result.close();

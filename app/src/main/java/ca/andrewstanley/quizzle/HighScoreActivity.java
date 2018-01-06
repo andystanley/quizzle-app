@@ -3,7 +3,6 @@ package ca.andrewstanley.quizzle;
 import android.app.Activity;
 import android.content.Intent;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -23,17 +22,17 @@ public class HighScoreActivity extends Activity {
         setContentView(R.layout.activity_high_score);
 
         // Set up views
-        txtScore = findViewById(R.id.your_score);
-        txtHighScore = findViewById(R.id.high_score);
+        txtScore = findViewById(R.id.txt_score);
+        txtHighScore = findViewById(R.id.txt_highscore);
         btnMenu = findViewById(R.id.btn_menu);
         btnRepeat = findViewById(R.id.btn_repeat);
 
-
+        // Get the quizid and score from the Quiz Activity
         Intent intent = getIntent();
-        int score = intent.getIntExtra("score",0);
+        final int score = intent.getIntExtra("score",0);
         final String quizId = intent.getStringExtra("quizId");
 
-        // Set the textview to the score
+        // Set the textview to the user's score
         txtScore.setText("Your Score: " + score);
 
         // Get the high score from shared preferences
@@ -42,6 +41,7 @@ public class HighScoreActivity extends Activity {
         // Save the users score to shared preferences
         saveScore(score, quizId);
 
+        // If the Repeat Quiz button is clicked start the quiz activity again and pass the quizId into it
         btnRepeat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,6 +51,7 @@ public class HighScoreActivity extends Activity {
             }
         });
 
+        // If the Menu button is clicked start to Main Activity
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

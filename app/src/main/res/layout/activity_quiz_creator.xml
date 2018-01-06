@@ -7,7 +7,7 @@
     tools:context="ca.andrewstanley.quizzle.QuizCreatorActivity">
 
     <EditText
-        android:id="@+id/quiz_question"
+        android:id="@+id/txt_question"
         android:layout_width="336dp"
         android:layout_height="54dp"
         android:layout_marginBottom="8dp"
@@ -39,7 +39,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.159"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/quiz_question"
+        app:layout_constraintTop_toBottomOf="@+id/txt_question"
         app:layout_constraintVertical_bias="0.002" />
 
     <EditText
@@ -75,7 +75,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.159"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/quiz_question"
+        app:layout_constraintTop_toBottomOf="@+id/txt_question"
         app:layout_constraintVertical_bias="0.212" />
 
     <EditText
@@ -134,7 +134,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.164"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/quiz_question"
+        app:layout_constraintTop_toBottomOf="@+id/txt_question"
         app:layout_constraintVertical_bias="0.446" />
 
     <EditText
@@ -152,7 +152,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.164"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/quiz_question"
+        app:layout_constraintTop_toBottomOf="@+id/txt_question"
         app:layout_constraintVertical_bias="0.739" />
 
     <TextView

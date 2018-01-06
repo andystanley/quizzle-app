@@ -16,7 +16,7 @@ public class QuizCreatorActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_creator);
         dbId = new QuizDb(this);
-        quizQuestion = (EditText) findViewById(R.id.quiz_question);
+        quizQuestion = (EditText) findViewById(R.id.txt_question);
         answerOne = (EditText) findViewById(R.id.answer_one);
         answerTwo = (EditText) findViewById(R.id.answer_two);
         answerThree = (EditText) findViewById(R.id.answer_three);
@@ -44,10 +44,10 @@ public class QuizCreatorActivity extends Activity {
                         addSubject.getText().toString());
 
               if (quizAdded == true){
-                  Toast.makeText(QuizCreatorActivity.this,"Question is Saved",Toast.LENGTH_SHORT).show();
+                  Toast.makeText(QuizCreatorActivity.this,"Questions is Saved",Toast.LENGTH_SHORT).show();
               }
               else
-                  Toast.makeText(QuizCreatorActivity.this,"Question is Not Saved",Toast.LENGTH_SHORT).show();
+                  Toast.makeText(QuizCreatorActivity.this,"Questions is Not Saved",Toast.LENGTH_SHORT).show();
             }
         });
     }

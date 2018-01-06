@@ -2,25 +2,21 @@ package ca.andrewstanley.quizzle;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MainActivity extends Activity {
 
     Button btnStartQuiz;
-    Button btnCreateQuiz;
+    Button btnAddQuestions;
     TextView txtScores;
 
     @Override
@@ -30,12 +26,13 @@ public class MainActivity extends Activity {
 
         // Set up views
         btnStartQuiz = findViewById(R.id.btn_start_quiz);
-        btnCreateQuiz = findViewById(R.id.btn_create_quiz);
+        btnAddQuestions = findViewById(R.id.btn_add_questions);
         txtScores = findViewById(R.id.txt_scores);
 
         // Display the recent quizzes
         displayRecentQuizzes();
 
+        // When Start Quiz is clicked display the categories
         btnStartQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,7 +40,8 @@ public class MainActivity extends Activity {
             }
         });
 
-        btnCreateQuiz.setOnClickListener(new View.OnClickListener() {
+        // Open the Add Questions Activity when the Add Questions button is clicked
+        btnAddQuestions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent quizCreatorActivity = new Intent(getApplicationContext(), QuizCreatorActivity.class);
@@ -54,6 +52,7 @@ public class MainActivity extends Activity {
     }
 
     private void displayCategories() {
+        // Create and display an AlertDialog with all the categories
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle("Choose a Category")
@@ -67,6 +66,7 @@ public class MainActivity extends Activity {
     }
 
     private void displayQuizzes(String [] quizzes) {
+        // Create and display an AlertDialog with all the quizzes
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle("Choose a Quiz")
@@ -79,55 +79,62 @@ public class MainActivity extends Activity {
         dialog.show();
     }
 
+    // Create a String Array that holds all the categories
     private String[] categories = {"Computer Science", "Geography", "Biology", "Custom Quizzes"};
 
-    private String[] quizzes = new String []{null};
+    // Create a String Array that will hold all the quizzes
+    private String[] quizzes;
 
+    // Listener for when a category is selected
     DialogInterface.OnClickListener categoryListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
-            //Toast.makeText(MainActivity.this, "You selected " + itemList[which], Toast.LENGTH_LONG).show();
+            switch (which) {
+                case 0: // Computer Science
+                    quizzes = new String[]{"Android", "C#", "C++"};
+                    break;
+                case 1: // Geography
+                    quizzes = new String[]{"Canada"};
+                    break;
+                case 2: // Biology
+                    quizzes = new String[]{"Osmosis"};
+                    break;
+                case 3: // Created Quizzes
+                    // Get the created quizzes from the database
+                    QuizDb database = new QuizDb(getApplicationContext());
+                    quizzes = database.getCreatedQuizzes();
+                    break;
+            }
 
-            if (which == 0) { // Computer Science
-                quizzes = new String[]{"Android", "C#", "C++"};
-            }
-            else if (which == 1) { // Geography
-                quizzes = new String[]{"Canada"};
-            }
-            else if (which == 2) { // Biology
-                quizzes = new String[]{"Osmosis"};
-            }
-            else if (which == 3) { // Created Quizzes
-                QuizDb database = new QuizDb(getApplicationContext());
-                quizzes = database.getCreatedQuizzes(); //get questions/choices/answers from db
-            }
             displayQuizzes(quizzes);
         }
     };
 
+    // Listener for when a quiz is clicked
     DialogInterface.OnClickListener quizListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
-            Toast.makeText(MainActivity.this, "You selected " + quizzes[which], Toast.LENGTH_LONG).show();
-
-            // Open the QuizActivity
+            // Open and pass the selected quiz to the QuizActivity
             Intent quizActivity = new Intent(getApplicationContext(), QuizActivity.class);
-            // Pass the selected quiz to the QuizActivity
             quizActivity.putExtra("quizId", quizzes[which]);
             startActivity(quizActivity);
         }
     };
 
     public void displayRecentQuizzes() {
+        // Get Shared Preferences
         SharedPreferences scores = PreferenceManager.getDefaultSharedPreferences(this);
 
+        // Create a new string builder
         StringBuilder scoresBuilder = new StringBuilder("");
 
+        // Fill the string builder with the most recent quiz
         scoresBuilder.append("Quiz: ");
         scoresBuilder.append(scores.getString("quiz", ""));
         scoresBuilder.append(" Score: ");
         scoresBuilder.append(scores.getInt("score", 0));
 
+        // Display the string builder
         txtScores.setText(scoresBuilder);
     }
 }
