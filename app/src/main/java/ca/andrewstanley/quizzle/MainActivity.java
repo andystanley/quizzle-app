@@ -31,7 +31,7 @@ public class MainActivity extends Activity {
         btnAddQuestions = findViewById(R.id.btn_add_questions);
         txtScores = findViewById(R.id.txt_scores);
 
-        // Initiliaze the deafult questions
+        // Initiliaze the default questions
         questionBank = new QuestionBank();
         questionBank.initDefaultQuestions(getApplicationContext());
 

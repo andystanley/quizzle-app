@@ -117,13 +117,9 @@ public class QuizDb {
         // Get readable database
         database = openHelper.getReadableDatabase();
 
-        //String[] columns = new String[] {"*"};
-
         String select = "quizid=?";
 
         String[] selectArgs = new String[] {quizId};
-
-        //String order = "question";
 
         // Run a SELECT query WHERE quizid = quizId
         Cursor result = database.query(QUESTIONS_TABLE, null, select, selectArgs, null, null, null);
@@ -145,6 +141,7 @@ public class QuizDb {
             choices[2] = choice3;
             choices[3] = choice4;
 
+            // Add the questions to the array
             questions.add(new Question(question, choices, answer, quizid));
         }
 
@@ -216,7 +213,7 @@ public class QuizDb {
         return cq;
     }
 
-    public boolean addQuiz(String question, String choice1, String choice2, String choice3, String choice4, String answer, String quizId){
+    public boolean addQuestion(String question, String choice1, String choice2, String choice3, String choice4, String answer, String quizId){
         SQLiteDatabase db = openHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(QUESTION, question);

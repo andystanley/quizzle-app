@@ -28,14 +28,20 @@ public class QuestionBank {
     { return questionList.get(a).getAnswer();}
 
     public void initQuestions(Context context, String quizId){
+        // Create an instance of the Quiz Database
         database = new QuizDb(context);
-        questionList = database.getQuestions(quizId); //get questions from database
+        //get questions from database
+        questionList = database.getQuestions(quizId);
     }
 
     public void initDefaultQuestions(Context context) {
+        // Create an instance of the Quiz Database
         database = new QuizDb(context);
+
+        // Pull a list of Android questions from the database to test
         List<Question> allQuestions = database.getQuestions("Android");//get questions/choices/answers from db
 
+        // If the there is no questions in the database, fill it with questions
         if(allQuestions.isEmpty()) {
             database.saveQuestion(new Question("1. How are integers declared?", new String[]{"integer", "float", "int", "double"}, "int", "Android"));
             database.saveQuestion(new Question("2. What is an Activity in Android?", new String[]{"Performs the actions on screen", "Manage Application Content", "Screen UI", "None of the above"}, "Performs the actions on screen", "Android"));
