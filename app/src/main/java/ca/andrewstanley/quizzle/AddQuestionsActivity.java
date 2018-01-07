@@ -1,6 +1,7 @@
 package ca.andrewstanley.quizzle;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -32,9 +33,10 @@ public class AddQuestionsActivity extends Activity {
         btnSaveQuestion = findViewById(R.id.save_question);
         doneButton = findViewById(R.id.done_button);
         final Spinner addCat = findViewById(R.id.newCatSpinner);
-        String[] categories;
         existingCat = findViewById(R.id.existingCat);
         newCat = findViewById(R.id.newCat);
+
+        String[] categories;
 
         existingCat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +71,15 @@ public class AddQuestionsActivity extends Activity {
             }
         });
 
+        doneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Return to the main activity
+                Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(mainActivity);
+            }
+        });
+
         QuizDb database = new QuizDb(getApplicationContext());
         categories = database.getAllQuizzes();
         //create instance of array adapter
@@ -95,11 +106,41 @@ public class AddQuestionsActivity extends Activity {
                 answerFour.getText().toString(),
                 correctAnswer.getText().toString(),
                 quiz);
-                //addSubject.getText().toString());
 
-        if (quizAdded == true) {
-            Toast.makeText(this, "Question is Saved", Toast.LENGTH_SHORT).show();
-        } else
-            Toast.makeText(this, "Question is Not Saved", Toast.LENGTH_SHORT).show();
+        if (quizQuestion.getText().toString().matches("") ||
+                answerOne.getText().toString().matches("") ||
+                answerTwo.getText().toString().matches("") ||
+                answerThree.getText().toString().matches("") ||
+                answerFour.getText().toString().matches("") ||
+                correctAnswer.getText().toString().matches("")) {
+            Toast.makeText(this, "Please fill out all fields!", Toast.LENGTH_SHORT).show();
+        }
+        else if (quiz.matches("")) {
+            Toast.makeText(this, "To create a new quiz, please enter a name!", Toast.LENGTH_SHORT).show();
+        }
+        else if (!correctAnswer.getText().toString().matches(answerOne.getText().toString()) &&
+                !correctAnswer.getText().toString().matches(answerTwo.getText().toString()) &&
+                !correctAnswer.getText().toString().matches(answerThree.getText().toString()) &&
+                !correctAnswer.getText().toString().matches(answerFour.getText().toString())) {
+            Toast.makeText(this, "The correct answer must be on of the answers!", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            if (quizAdded == true) {
+                Toast.makeText(this, "Question saved to " + quiz, Toast.LENGTH_SHORT).show();
+
+                // Clear all the text views
+                quizQuestion.setText("");
+                answerOne.setText("");
+                answerTwo.setText("");
+                answerThree.setText("");
+                answerFour.setText("");
+                correctAnswer.setText("");
+                addSubject.setText("");
+            } else {
+                Toast.makeText(this, "Question Not Saved", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+
     }
 }

@@ -136,11 +136,20 @@ public class MainActivity extends Activity {
 
         // Fill the string builder with the most recent quiz
         scoresBuilder.append("Quiz: ");
-        scoresBuilder.append(scores.getString("quiz", ""));
-        scoresBuilder.append(" Score: ");
+        scoresBuilder.append(scores.getString("quiz", null));
+        scoresBuilder.append("   Score: ");
         scoresBuilder.append(scores.getInt("score", 0));
 
-        // Display the string builder
-        txtScores.setText(scoresBuilder);
+        String quiz = scores.getString("quiz", null);
+
+        // Check if there is a recent quiz to display
+        if (quiz == null) {
+            // Display nothing
+            txtScores.setText("");
+        }
+        else {
+            // Display the recent quiz
+            txtScores.setText(scoresBuilder);
+        }
     }
 }
