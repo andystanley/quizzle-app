@@ -114,16 +114,6 @@ public class AddQuestionsActivity extends Activity {
 
     // Save the question to the appropriate quiz
     public void saveQuestion(String quiz) {
-        // Returns true if quiz is added to the database
-        boolean quizAdded = dbId.addQuestion(
-                quizQuestion.getText().toString(),
-                answerOne.getText().toString(),
-                answerTwo.getText().toString(),
-                answerThree.getText().toString(),
-                answerFour.getText().toString(),
-                correctAnswer.getText().toString(),
-                quiz);
-
         // If fields are missing display an error
         if (quizQuestion.getText().toString().matches("") ||
                 answerOne.getText().toString().matches("") ||
@@ -142,10 +132,20 @@ public class AddQuestionsActivity extends Activity {
                 !correctAnswer.getText().toString().matches(answerTwo.getText().toString()) &&
                 !correctAnswer.getText().toString().matches(answerThree.getText().toString()) &&
                 !correctAnswer.getText().toString().matches(answerFour.getText().toString())) {
-            Toast.makeText(this, "The correct answer must be on of the answers!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "The correct answer must be one of the answers!", Toast.LENGTH_SHORT).show();
         }
         // Attempt to add the quiz to the database
         else {
+            // Returns true if quiz is added to the database
+            boolean quizAdded = dbId.addQuestion(
+                    quizQuestion.getText().toString(),
+                    answerOne.getText().toString(),
+                    answerTwo.getText().toString(),
+                    answerThree.getText().toString(),
+                    answerFour.getText().toString(),
+                    correctAnswer.getText().toString(),
+                    quiz);
+
             if (quizAdded == true) {
                 Toast.makeText(this, "Question saved to " + quiz, Toast.LENGTH_SHORT).show();
 
